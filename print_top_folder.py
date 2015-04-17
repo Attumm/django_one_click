@@ -1,4 +1,4 @@
-import sys
+import sys, os
 project_name = sys.argv[1]
 
 sh_settings = 'locate %s/settings.py | grep -w settings.py' % project_name
