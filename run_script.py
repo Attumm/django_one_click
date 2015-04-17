@@ -87,6 +87,7 @@ with open('/etc/init/gunicorn.conf', 'w') as f:
 
 
 def change_settings(settings_file):
+	start_db = 0
 	for i in range(len(settings_file)):
 		line = settings_file[i]
 		if line.startswith('MEDIA_ROOT'):
@@ -117,38 +118,41 @@ def change_settings(settings_file):
 			settings_file[i] = ""
 
 
-	MEDIA_STATIC_INFO = """
-	MEDIA_URL = '/media/'
-	MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+	STATIC_MEDIA_INFO = """
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-	STATIC_URL = '/static/'
-	STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 	"""
 
 
 
 	DB_INFO = """
 	# added by django one click install script.\n
-	DATABASES = {
-	       'default': {
-	           'ENGINE': 'django.db.backends.postgresql_psycopg2',
-	           'NAME': 'django',
-	           'USER': 'django',
-	           'PASSWORD': '%s',
-	           'HOST': 'localhost',
-	           'PORT': '5432',
-	       }
-	   }
+DATABASES = {
+	'default': {
+ 		'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'django',
+        'USER': 'django',
+        'PASSWORD': '%s',
+       	'HOST': 'localhost',
+        'PORT': '5432',
+       }
+   }
 	""" % password_db
 
-	add_to = min(start_db, len(settings_file) -1)
-	settings_file[add_to] = DB_INFO
+	#add_to = min(start_db, len(settings_file) -1)
+	#settings_file[add_to] = DB_INFO
+	settings_file.append(DB_INFO)
 	settings_file.append(STATIC_MEDIA_INFO)
 
-	return settings_file.join()
+	return "".join(settings_file)
 
 with open(path_to_settings, 'w+') as f:
 	settings_file_list = f.readlines()
+	temp = change_settings(settings_file_list)
+	print temp
 	settings_file = change_settings(settings_file_list)
 	f.seek(0)
 	f.write(settings_file)

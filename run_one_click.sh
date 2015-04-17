@@ -2,11 +2,13 @@
 
 rm -R /home/django/django_project
 
+updatedb
+
 project_name=$1
 path_to_requirements=$(locate requirements.txt)
 top_folder=$(python /home/django_one_click/print_top_folder.py $1)
 
-updatedb
+
 #apt-get update
 #apt-get upgrade
 
