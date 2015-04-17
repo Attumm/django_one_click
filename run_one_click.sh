@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm -R /home/django
+rm -R /home/django/django_project
 
 project_name=$1
 path_to_requirements=$(locate requirements.txt)
@@ -20,6 +20,6 @@ path_to_requirements=$(locate requirements.txt)
 
 python /home/django_one_click/run_script.py $project_name
 
-chown -R django:django 'django/$top_folder'
+chown -R django:django 'django/{$top_folder}'
 service nginx restart
 service gunicorn restart
