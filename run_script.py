@@ -85,11 +85,6 @@ with open('/etc/nginx/sites-enabled/django', 'w') as f:
 with open('/etc/init/gunicorn.conf', 'w') as f:
 	f.write(gunicorn_deamon)
 
-with open(path_to_settings, 'w+') as f:
-	settings_file_list = f.readlines()
-	settings_file = change_settings(settings_file_list)
-	f.seek(0)
-	f.write(settings_file)
 
 def change_settings(settings_file_list):
 	for i in range(len(settings_file)):
@@ -105,18 +100,19 @@ def change_settings(settings_file_list):
 		elif line.startswith("DATABASES"):
 			start_db = i
 
-	# finding the end of DATABASE.
-	counter = 0
-	for i in range(10, -1, -1):
-		if "}" in settings_file[start_db + i]:
-			counter += 1
-			if counter >= 2:
-				break
-			end_db = start_db + i
+	if start_db
+		# finding the end of DATABASE.
+		counter = 0
+		for i in range(10, -1, -1):
+			if "}" in settings_file[start_db + i]:
+				counter += 1
+				if counter >= 2:
+					break
+				end_db = start_db + i
 
-	# removing the old db info
-	for i in range(start_db, end_db + 1):
-		settings_file[i] = ""
+		# removing the old db info
+		for i in range(start_db, end_db + 1):
+			settings_file[i] = ""
 
 
 	MEDIA_STATIC_INFO = """
