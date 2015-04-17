@@ -8,6 +8,6 @@ with os.popen(sh_settings) as f:
 
 def top_folder_django(path_to_settings):
 	#removing settings.py and project_name
-	 return path_to_settings.split("/")[-3]
+	 return path_to_settings.split("/")[-2]
 
 print top_folder_django(path_to_settings)

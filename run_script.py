@@ -81,7 +81,7 @@ exec gunicorn \
  """.format(project_name=project_name)
 
 with open('/etc/nginx/sites-enabled/django', 'w') as f:
-	f.write('nginx_conf')
+	f.write(nginx_conf)
 
 with open('/etc/init/gunicorn.conf', 'w') as f:
 	f.write(gunicorn_deamon)
@@ -93,7 +93,7 @@ with open(path_to_settings, 'w+') as f:
 	f.write(settings_file)
 
 def change_settings(settings_file_list):
-	for i in range(len(settings_file):
+	for i in range(len(settings_file)):
 		line = settings_file[i]
 		if line.startswith('MEDIA_ROOT'):
 			settings_file[i] = ""

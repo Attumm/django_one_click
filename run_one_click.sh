@@ -20,6 +20,6 @@ path_to_requirements=$(locate requirements.txt)
 
 python /home/django_one_click/run_script.py $project_name
 
-chown -R django:django django/$top_folder
+chown -R django:django 'django/$top_folder'
 service nginx restart
 service gunicorn restart
