@@ -86,7 +86,8 @@ with open('/etc/init/gunicorn.conf', 'w') as f:
 	f.write(gunicorn_deamon)
 
 
-def change_settings(settings_file_list):
+def change_settings(settings_file):
+	start_db = Dalse
 	for i in range(len(settings_file)):
 		line = settings_file[i]
 		if line.startswith('MEDIA_ROOT'):
@@ -100,8 +101,10 @@ def change_settings(settings_file_list):
 		elif line.startswith("DATABASES"):
 			start_db = i
 
-	if start_db
-		# finding the end of DATABASE.
+	if not start_db:
+		start_db = len(settings_file)
+	else:
+				# finding the end of DATABASE.
 		counter = 0
 		for i in range(10, -1, -1):
 			if "}" in settings_file[start_db + i]:
