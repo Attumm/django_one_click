@@ -42,12 +42,12 @@ server {
 
     # Your Django project's media files - amend as required
     location /media  {
-        alias %s/media;
+        alias %smedia;
     }
 
     # your Django project's static files - amend as required
     location /static {
-        alias %s/static; 
+        alias %sstatic; 
     }
 
     location / {
@@ -71,11 +71,11 @@ setuid django
 setgid django
 chdir /home/django
 
-exec gunicorn \
-    --name={project_name} \
-    --pythonpath={project_name} \
-    --bind=0.0.0.0:9000 \
-    --config /etc/gunicorn.d/gunicorn.py \
+exec gunicorn \\
+    --name={project_name} \\
+    --pythonpath={project_name} \\
+    --bind=0.0.0.0:9000 \\
+    --config /etc/gunicorn.d/gunicorn.py \\
     {project_name}.wsgi:application
  """.format(project_name=project_name)
 
@@ -87,7 +87,6 @@ with open('/etc/init/gunicorn.conf', 'w') as f:
 
 
 def change_settings(settings_file):
-	start_db = Dalse
 	for i in range(len(settings_file)):
 		line = settings_file[i]
 		if line.startswith('MEDIA_ROOT'):
@@ -135,14 +134,15 @@ def change_settings(settings_file):
 	           'ENGINE': 'django.db.backends.postgresql_psycopg2',
 	           'NAME': 'django',
 	           'USER': 'django',
-	           'PASSWORD': '{password_db}',
+	           'PASSWORD': '%s',
 	           'HOST': 'localhost',
 	           'PORT': '5432',
 	       }
 	   }
-	""".format(password_db=password_db)
+	""" % password_db
 
-	settings_file[start_db] = DB_INFO
+	add_to = min(start_db, len(settings_file) -1)
+	settings_file[add_to] = DB_INFO
 	settings_file.append(STATIC_MEDIA_INFO)
 
 	return settings_file.join()
