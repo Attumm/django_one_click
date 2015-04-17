@@ -149,10 +149,8 @@ DATABASES = {
 
 	return "".join(settings_file)
 
-with open(path_to_settings, 'w+') as f:
+with open(path_to_settings, 'r+') as f:
 	settings_file_list = f.readlines()
-	temp = change_settings(settings_file_list)
-	print temp
 	settings_file = change_settings(settings_file_list)
 	f.seek(0)
 	f.write(settings_file)
