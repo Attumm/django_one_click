@@ -56,7 +56,7 @@ server {
         proxy_redirect off;
         proxy_pass http://app_server;
     }
-}""".format(base_dir, base_dir)
+}""" % (base_dir, base_dir)
 
 
 gunicorn_deamon = """description "Gunicorn daemon for Django project"
@@ -147,3 +147,9 @@ def change_settings(settings_file_list):
 	settings_file.append(STATIC_MEDIA_INFO)
 
 	return settings_file.join()
+
+with open(path_to_settings, 'w+') as f:
+	settings_file_list = f.readlines()
+	settings_file = change_settings(settings_file_list)
+	f.seek(0)
+	f.write(settings_file)
