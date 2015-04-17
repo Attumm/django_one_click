@@ -2,8 +2,9 @@
 #Digital Ocean One click installer
 apt-get git
 cd /home/
-git clone https://www.github.com/attumm/one_click_installer.git
+git clone git clone https://github.com/Attumm/django_one_click.git
 git clone yourproject
 
-chmod 777 one_click_installer/run_one_click.sh
-one_click_installer/./run_one_click.sh <your_project_name>
+chmod 777 django_one_click/run_one_click.sh
+
+django_one_click/./run_one_click.sh <your_project_name>

@@ -3,7 +3,7 @@
 
 project_name=$1
 path_to_requirements=$(locate requirements.txt)
-top_folder = $(python /home/print_top_folder.py $1)
+top_folder = $(python /home/django_one_click/print_top_folder.py $1)
 
 updatedb
 apt-get update
