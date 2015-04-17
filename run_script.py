@@ -80,7 +80,7 @@ exec gunicorn \
     {project_name}.wsgi:application
  """.format(project_name=project_name)
 
-with open('/etc/nginx/sites-enabled/django', 'w') as f):
+with open('/etc/nginx/sites-enabled/django', 'w') as f:
 	f.write('nginx_conf')
 
 with open('/etc/init/gunicorn.conf', 'w') as f:
