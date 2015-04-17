@@ -58,6 +58,11 @@ server {
     }
 }""" % (base_dir, base_dir)
 
+def top_folder_django(path_to_settings):
+	#removing settings.py and project_name
+	 return path_to_settings.split("/")[-3]
+
+top_folder = top_folder_django(path_to_settings)
 
 gunicorn_deamon = """description "Gunicorn daemon for Django project"
 
@@ -72,12 +77,12 @@ setgid django
 chdir /home/django
 
 exec gunicorn \\
-    --name={project_name} \\
-    --pythonpath={project_name} \\
+    --name={top_folder} \\
+    --pythonpath={top_folder} \\
     --bind=0.0.0.0:9000 \\
     --config /etc/gunicorn.d/gunicorn.py \\
     {project_name}.wsgi:application
- """.format(project_name=project_name)
+ """.format(project_name=project_name, top_folder=top_folder)
 
 with open('/etc/nginx/sites-enabled/django', 'w') as f:
 	f.write(nginx_conf)
@@ -96,7 +101,7 @@ def change_settings(settings_file):
 			settings_file[i] = ""
 		elif line.startswith('STATIC_ROOT'):
 			settings_file[i] = ""
-		elif line.startwith('STATIC_URL'):
+		elif line.starstwith('STATIC_URL'):
 			settings_file[i] = ""
 		elif line.startswith("DATABASES"):
 			start_db = i
