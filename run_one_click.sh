@@ -6,7 +6,7 @@ project_name=$1
 path_to_requirements=$(locate requirements.txt)
 top_folder=$(python /home/django_one_click/print_top_folder.py $1)
 
-#updatedb
+updatedb
 #apt-get update
 #apt-get upgrade
 
@@ -20,6 +20,6 @@ path_to_requirements=$(locate requirements.txt)
 
 python /home/django_one_click/run_script.py $project_name
 
-chown -R django:django 'django/{$top_folder}'
-service nginx restart
+chown -R django:django django/$top_folder
+service ngnix restart
 service gunicorn restart
