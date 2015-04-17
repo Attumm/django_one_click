@@ -23,7 +23,7 @@ def base_dir_func(path_to_settings):
 	#removing settings.py and project_name
 	 return "/".join(i for i in path_to_settings.split("/")[:-2])
 
-base_dir = base_dir_func(path_to_settings)
+base_dir = base_dir_func(path_to_settings) + "/"
 nginx_conf = """upstream app_server {
     server 127.0.0.1:9000 fail_timeout=0;
 }
@@ -42,12 +42,12 @@ server {
 
     # Your Django project's media files - amend as required
     location /media  {
-        alias {base_dir}/media;
+        alias %s/media;
     }
 
     # your Django project's static files - amend as required
     location /static {
-        alias {base_dir}/static; 
+        alias %s/static; 
     }
 
     location / {
@@ -56,8 +56,7 @@ server {
         proxy_redirect off;
         proxy_pass http://app_server;
     }
-}
-""".format(base_dir=base_dir)
+}""".format(base_dir, base_dir)
 
 
 gunicorn_deamon = """description "Gunicorn daemon for Django project"
