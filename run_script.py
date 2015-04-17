@@ -1,10 +1,10 @@
-import sys 
+import sys, os
 
 project_name = sys.argv[1]
 
 
 # get the postgres password
- with os.popen('cat /etc/motd.tail | grep Pass') as f:
+with os.popen('cat /etc/motd.tail | grep Pass') as f:
  	password_db = f.read().split()[3]
 
 # get requirements.txt
@@ -19,10 +19,11 @@ sh_settings = 'locate %s/settings.py | grep -w settings.py' % project_name
 with os.popen(sh_settings) as f:
 	path_to_settings = f.read()[:-1]
 
-def base_dir(path_to_settings):
+def base_dir_func(path_to_settings):
 	#removing settings.py and project_name
 	 return "/".join(i for i in path_to_settings.split("/")[:-2])
 
+base_dir = base_dir_func(path_to_settings)
 nginx_conf = """upstream app_server {
     server 127.0.0.1:9000 fail_timeout=0;
 }
@@ -56,7 +57,7 @@ server {
         proxy_pass http://app_server;
     }
 }
-""".format(base_dir=base_dir(path_to_settings))
+""".format(base_dir=base_dir)
 
 
 gunicorn_deamon = """description "Gunicorn daemon for Django project"
@@ -79,15 +80,15 @@ exec gunicorn \
     {project_name}.wsgi:application
  """.format(project_name=project_name)
 
-with open('/etc/nginx/sites-enabled/django' as f):
+with open('/etc/nginx/sites-enabled/django', 'w') as f):
 	f.write('nginx_conf')
 
-with open('/etc/init/gunicorn.conf', w) as f:
+with open('/etc/init/gunicorn.conf', 'w') as f:
 	f.write(gunicorn_deamon)
 
 with open(path_to_settings, 'w+') as f:
 	settings_file_list = f.readlines()
-	settings_file) = change_settings(settings_file_list)
+	settings_file = change_settings(settings_file_list)
 	f.seek(0)
 	f.write(settings_file)
 
@@ -108,9 +109,9 @@ def change_settings(settings_file_list):
 	# finding the end of DATABASE.
 	counter = 0
 	for i in range(10, -1, -1):
-	     if "}" in settings_file[start_db + i]:
+		if "}" in settings_file[start_db + i]:
 			counter += 1
-	        if counter >= 2:
+			if counter >= 2:
 				break
 			end_db = start_db + i
 
