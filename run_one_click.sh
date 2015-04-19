@@ -11,11 +11,11 @@ project_name=$(python /home/django_one_click/print_name_project.py)
 project_root=$(python /home/django_one_click/print_root_project.py)
 
 
-yes | apt-get update
-yes | apt-get upgrade
+printf 'y\n' | apt-get update
+printf 'y\n' | apt-get upgrade
 
 # install for postgres
-yes | apt-get install python-psycopg2 libpq-dev
+printf 'y\n' | apt-get install python-psycopg2 libpq-dev
 
 path_to_requirements=$(locate requirements.txt)
 
@@ -30,3 +30,6 @@ python /home/django/$project_root/manage.py createsuperuser
 
 service nginx restart
 service gunicorn restart
+
+# to do add ip addr
+echo "succes go to your browser and enter the ip addr"
