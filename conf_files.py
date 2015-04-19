@@ -56,10 +56,10 @@ exec gunicorn \\
  
 STAT_MED_INFO = """
 MEDIA_URL = '/media/'
-MEDIA_ROOT = {path_to_media}
+MEDIA_ROOT = '{path_to_media}'
 
 STATIC_URL = '/static/'
-STATIC_ROOT = {path_to_static}
+STATIC_ROOT = '{path_to_static}'
     """
 
 DB_INFO = """

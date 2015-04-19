@@ -5,7 +5,7 @@ from conf_files import STAT_MED_INFO, DB_INFO
 
 
 def get_info():
-	with os.popen("locate settings.py | grep home/django") as f:
+	with os.popen("locate settings.py | grep home/django | grep -w settings.py") as f:
 		path = f.read()[:-1]
 		
 	list_items = path.split("/")
@@ -72,7 +72,7 @@ def change_settings_file_list(settings_file_list, info_dic, STAT_MED_INFO, DB_IN
 		for i in range(start_db, end_db + 1):
 			settings_file_list[i] = ""
 
-	DB_INFO % info_dic["password_db"]
+	DB_INFO = DB_INFO % info_dic["password_db"]
 	STAT_MED_INFO = STAT_MED_INFO.format(
 						path_to_media=info_dic["path_to_media"],
 						path_to_static=info_dic["path_to_static"],

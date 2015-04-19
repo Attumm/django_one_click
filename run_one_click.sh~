@@ -21,7 +21,7 @@ path_to_requirements=$(locate requirements.txt)
 
 pip install -r $path_to_requirements
 
-python /home/django_one_click/change_conf_files.py 
+python /home/django_one_click/change_conf_files.py $project_name
 
 chown -R django:django django/$project_root
 
