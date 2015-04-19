@@ -6,7 +6,7 @@ from conf_files import STAT_MED_INFO, DB_INFO
 
 def get_info():
 	with os.popen("locate settings.py | grep home/django") as f:
-		path = f.read()[-1]
+		path = f.read()[:-1]
 		
 	list_items = path.split("/")
     
@@ -37,12 +37,12 @@ def change_nginx_conf(nginx_conf, info_dic):
 		
 		
 def change_gunicorn_conf(gunicorn_deamon_conf, info_dic):
-	gunicorn_deamon_conf.format(
-							project_name=info_dic["project_name"], 
-							top_folder=info_dic["project_root"],
+	 gunicorn_deamon_conf = gunicorn_deamon_conf.format(
+                            project_root=info_dic["project_root"],
+							project_name=info_dic["project_name"],
 							)
 	with open('/etc/init/gunicorn.conf', 'w') as f:
-		f.write(gunicorn_deamon)
+		f.write(gunicorn_deamon_conf)
 
 
 def change_settings_file_list(settings_file_list, info_dic, STAT_MED_INFO, DB_INFO):
@@ -72,6 +72,11 @@ def change_settings_file_list(settings_file_list, info_dic, STAT_MED_INFO, DB_IN
 			settings_file_list[i] = ""
 
 	DB_INFO % info_dic["password_db"]
+    STAT_MED_INFO = STAT_MED_INFO.format(
+                        path_to_media=info_dic["path_to_media"],
+                        path_to_static=[info_dic["path_to_static"],
+                        )
+                                        
 
 	settings_file_list.append(DB_INFO)
 	settings_file_list.append(STAT_MED_INFO)
@@ -80,7 +85,7 @@ def change_settings_file_list(settings_file_list, info_dic, STAT_MED_INFO, DB_IN
 
 
 def change_settings(info_dic, STAT_MED_INFO, DB_INFO):
-	with open(path_to_settings, 'r+') as f:
+	with open(info_dic['path_to_settings'], 'r+') as f:
 		settings_file_list = f.readlines()
 		settings_file = change_settings_file_list(
 												settings_file_list, 
@@ -93,7 +98,7 @@ def change_settings(info_dic, STAT_MED_INFO, DB_INFO):
    
    
 if __name__ == "__main__":
-	info_dic = get_info
+	info_dic = get_info()
 	change_nginx_conf(nginx_conf, info_dic)
 	change_gunicorn_conf(gunicorn_deamon_conf, info_dic)
 	change_settings(info_dic, STAT_MED_INFO, DB_INFO)

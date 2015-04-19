@@ -47,8 +47,8 @@ setgid django
 chdir /home/django
 
 exec gunicorn \\
-    --name={root_project} \\
-    --pythonpath={root_project} \\
+    --name={project_root} \\
+    --pythonpath={project_root} \\
     --bind=0.0.0.0:9000 \\
     --config /etc/gunicorn.d/gunicorn.py \\
     {project_name}.wsgi:application
