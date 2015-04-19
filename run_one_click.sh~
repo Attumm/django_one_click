@@ -14,7 +14,7 @@ project_root=$(python /home/django_one_click/print_project_root.py)
 #yes | apt-get update
 #yes | apt-get upgrade
 
-apt-get update
+apg-get update
 apt-get upgrade
 apt-get install python-psycopg2 libpq-dev
 pip install -r $path_to_requirements
