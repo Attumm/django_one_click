@@ -38,10 +38,11 @@ def change_nginx_conf(nginx_conf, info_dic):
 		
 def change_gunicorn_conf(gunicorn_deamon_conf, info_dic):
 	 gunicorn_deamon_conf = gunicorn_deamon_conf.format(
-                            project_root=info_dic["project_root"],
-							project_name=info_dic["project_name"],
-							)
-	with open('/etc/init/gunicorn.conf', 'w') as f:
+                            	project_root=info_dic["project_root"],
+								project_name=info_dic["project_name"],
+								)
+	 
+	 with open('/etc/init/gunicorn.conf', 'w') as f:
 		f.write(gunicorn_deamon_conf)
 
 
@@ -72,10 +73,10 @@ def change_settings_file_list(settings_file_list, info_dic, STAT_MED_INFO, DB_IN
 			settings_file_list[i] = ""
 
 	DB_INFO % info_dic["password_db"]
-    STAT_MED_INFO = STAT_MED_INFO.format(
-                        path_to_media=info_dic["path_to_media"],
-                        path_to_static=[info_dic["path_to_static"],
-                        )
+	STAT_MED_INFO = STAT_MED_INFO.format(
+						path_to_media=info_dic["path_to_media"],
+						path_to_static=info_dic["path_to_static"],
+						)
                                         
 
 	settings_file_list.append(DB_INFO)
