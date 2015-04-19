@@ -4,9 +4,11 @@ rm -R /home/django/django_project
 
 updatedb
 
-project_name=$1
+
 path_to_requirements=$(locate requirements.txt)
-top_folder=$(python /home/django_one_click/print_top_folder.py $1)
+
+project_name=$(python /home/django_one_click/print_project_name.py)
+project_root=$(python /home/django_one_click/print_project_root.py)
 
 
 yes | apt-get update
@@ -20,12 +22,12 @@ path_to_requirements=$(locate requirements.txt)
 
 yes | pip install -r $path_to_requirements
 
-python /home/django_one_click/run_script.py $project_name
+python /home/django_one_click/change_conf_files.py $project_name
 
-chown -R django:django django/$top_folder
+chown -R django:django django/$project_root
 
-python /home/django/$top_folder/manage.py migrate
-python /home/django/$top_folder/manage.py createsuperuser
+python /home/django/$project_root/manage.py migrate
+python /home/django/$project_root/manage.py createsuperuser
 
 service ngnix restart
 service gunicorn restart
