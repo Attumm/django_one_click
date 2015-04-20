@@ -47,6 +47,7 @@ def change_gunicorn_conf(gunicorn_deamon_conf, info_dic):
 
 
 def change_settings_file_list(settings_file_list, info_dic, STAT_MED_INFO, DB_INFO):
+	# horrible function burn it with fire
 	start_db = 0
 	lines_to_remove = ('MEDIA_ROOT', 'MEDIA_URL', 'STATIC_ROOT', 'STATIC_URL')
 	for i in range(len(settings_file_list)):
