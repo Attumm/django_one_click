@@ -11,7 +11,7 @@ pip freeze > requirements.txt <br>
 Create an droplet with digital ocean. <br>
 Select django image, And then follow the commands. <br>
 
-apt-get install git <br>
+apt-get install git <your-django-app><br>
 
 cd /home/django <br>
 git clone <your-project> <br>
@@ -19,7 +19,7 @@ git clone <your-project> <br>
 cd /home/ <br>
 git clone https://github.com/Attumm/django_one_click.git <br>
         
-chmod 777 django_one_click/run_one_click.sh <br>
+chmod 711 django_one_click/run_one_click.sh <br>
 
 django_one_click/./run_one_click.sh <br>
 

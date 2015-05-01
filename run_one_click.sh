@@ -9,7 +9,10 @@ path_to_requirements=$(locate requirements.txt)
 
 project_name=$(python /home/django_one_click/print_name_project.py)
 project_root=$(python /home/django_one_click/print_root_project.py)
+ip_addr=$(hostname -I)
 
+export LC_ALL="en_US.UTF-8"
+export LC_CTYPE="en_US.UTF-8"
 
 printf 'y\n' | apt-get update
 printf 'y\n' | apt-get upgrade
@@ -31,5 +34,4 @@ python /home/django/$project_root/manage.py createsuperuser
 service nginx restart
 service gunicorn restart
 
-# to do add ip addr
-echo "succes go to your browser and enter the ip addr"
+echo "go to your browser and enter $ip_addr"

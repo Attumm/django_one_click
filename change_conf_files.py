@@ -86,7 +86,7 @@ def change_settings_file_list(settings_file_list, info_dic, STAT_MED_INFO, DB_IN
 	return "".join(settings_file_list)
 
 
-def change_settings(info_dic, STAT_MED_INFO, DB_INFO):
+def change_settings(STAT_MED_INFO, DB_INFO, info_dic):
 	with open(info_dic['path_to_settings'], 'r+') as f:
 		settings_file_list = f.readlines()
 		settings_file = change_settings_file_list(
@@ -103,5 +103,5 @@ if __name__ == "__main__":
 	info_dic = get_info()
 	change_nginx_conf(nginx_conf, info_dic)
 	change_gunicorn_conf(gunicorn_deamon_conf, info_dic)
-	change_settings(info_dic, STAT_MED_INFO, DB_INFO)
+	change_settings(STAT_MED_INFO, DB_INFO, info_dic)
   
