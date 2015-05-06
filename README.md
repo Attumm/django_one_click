@@ -11,10 +11,10 @@ pip freeze > requirements.txt <br>
 Create an droplet with digital ocean. <br>
 Select django image, And then follow the commands. <br>
 
-apt-get install git (your-django-app)<br>
+apt-get install git <br>
 
 cd /home/django <br>
-git clone <your-project> <br>
+git clone (your-django-project) <br>
 
 cd /home/ <br>
 git clone https://github.com/Attumm/django_one_click.git <br>
