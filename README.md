@@ -19,7 +19,7 @@ git clone (your-django-project) <br>
 cd /home/ <br>
 git clone https://github.com/Attumm/django_one_click.git <br>
         
-chmod 711 django_one_click/run_one_click.sh <br>
+chmod 744 django_one_click/run_one_click.sh <br>
 
 django_one_click/./run_one_click.sh <br>
 
